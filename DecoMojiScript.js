@@ -78,7 +78,7 @@
 		["ン", "n2"]
 	];
 
-	s = s.replace(/(\d)/g, ":_$1:").replace(/([a-z])/g, ":_$14:");	//数字、小文字
+	s = s.replace(/\d/g, ":_$&:").replace(/[a-z]/g, ":_$&4:");	//数字、小文字
 
 	//大文字
 	s = s.replace(/[A-Z]/g, m => `:_${m.toLowerCase()}3:`);
