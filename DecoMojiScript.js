@@ -81,7 +81,7 @@
 	s = s.replace(/(\d)/g, ":_$1:").replace(/([a-z])/g, ":_$14:");	//数字、小文字
 
 	//大文字
-	s = s.replace(/[A-Z]/g, m => { return `:_${m.toLowerCase()}3:` });
+	s = s.replace(/[A-Z]/g, m => `:_${m.toLowerCase()}3:`);
 
 	//文字（正規化前）
 	for (var i = 0; i < c1.length; i++) {
