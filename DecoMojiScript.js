@@ -1,4 +1,4 @@
-(function() {
+(() => {
 	var s = prompt("テキスト");
 	if (s === null) return;
 	s = s.replace(/:/g, "：");
@@ -6,12 +6,12 @@
 	//文字（正規化前）
 	var c1 = [
 		//記号
-		["：", "colon"], ["…", "tententen"], ["(〜|～)", "wave"],
+		["：", "colon"], ["…", "tententen"], ["〜|～", "wave"],
 
 		//合略仮名
-		["ｺことｳ", "koto"], ["(ヿ|ｺコトｳ)", "koto2"],
-		["ｺともｳ", "tomo"], ["(𪜈|ｺトモｳ)", "tomo2"],
-		["ｺなりｳ", "nari"]
+		["ｺことｳ", "koto"], ["ヿ|ｺコトｳ", "koto2"],
+		["ｺともｳ", "tomo"], ["𪜈|ｺトモｳ", "tomo2"],
+		["𬼂|ｺなりｳ", "nari"]
 	];
 
 	//文字（正規化後）
@@ -30,7 +30,7 @@
 		["・", "middle_dot"], ["ー", "prolong"],
 
 		//拡張かナ文字
-		["い(ぃ|ィ)", "yi"], ["い(ぇ|ェ)", "ye"], ["うぃ", "wi"], ["う(ぅ|ゥ)", "wu"], ["うぇ", "we"], ["うぉ", "wo"],
+		["い[ぃィ]", "yi"], ["い[ぇェ]", "ye"], ["うぃ", "wi"], ["う[ぅゥ]", "wu"], ["うぇ", "we"], ["うぉ", "wo"],
 		["イィ", "yi2"], ["イェ", "ye2"], ["ウィ", "wi2"], ["ウゥ", "wu2"], ["ウェ", "we2"], ["ウォ", "wo2"],
 
 		//ひらがな
@@ -78,24 +78,17 @@
 		["ン", "n2"]
 	];
 
-	//数字、小文字
-	s = s.replace(/(\d)/g, ":_$1:")
-		.replace(/([a-z])/g, ":_$14:");
+	s = s.replace(/(\d)/g, ":_$1:").replace(/([a-z])/g, ":_$14:");	//数字、小文字
 
 	//大文字
-	var r;
-	while ((r = /([A-Z])/.exec(s)) !== null) {
-		s = s.replace(r[1], `:_${r[1].toLowerCase()}3:`);
-	}
+	s = s.replace(/[A-Z]/g, match => { return `:_${match.toLowerCase()}3:` });
 
 	//文字（正規化前）
 	for (var i = 0; i < c1.length; i++) {
 		s = s.replace(new RegExp(c1[i][0], "gu"), `:_${c1[i][1]}:`);
 	}
 
-	//正規化
-	s = s.replace(/゛/g, "゙").replace(/゜/g, "゚");
-	s = s.normalize("NFKC");
+	s = s.replace(/゛/g, "゙").replace(/゜/g, "゚").normalize("NFKC");	//正規化
 
 	//文字（正規化後）
 	for (var i = 0; i < c2.length; i++) {
